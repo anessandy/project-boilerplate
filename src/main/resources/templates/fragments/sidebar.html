@@ -1,0 +1,58 @@
+<style>
+  /* Mengatur lebar sidebar saat terbuka */
+  .main-sidebar, .main-sidebar::before {
+    width: 200px; /* Standarnya 250px, kita perkecil ke 200px */
+  }
+
+  /* Menyesuaikan margin konten agar tidak tertutup sidebar */
+  .content-wrapper, .main-footer, .main-header {
+    margin-left: 200px !important;
+  }
+  
+  /* Mengecilkan ukuran font menu agar pas di sidebar yang lebih kecil */
+  .nav-sidebar .nav-link p {
+    font-size: 0.85rem;
+  }
+</style>
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4" th:fragment="sidebar">
+
+    <a href="#" class="brand-link py-2">
+        <span class="brand-text font-weight-light" style="font-size: 14px;">
+            eKal-Kual Monitoring System
+        </span>
+        
+    </a>
+
+    <div class="sidebar" style="overflow-y: auto;">
+        <nav class="mt-1 text-sm">
+            <ul class="nav nav-pills nav-sidebar flex-column nav-compact nav-child-indent" data-widget="treeview">              
+                <!-- GROUP -->
+                <li th:each="group : ${menuGroups}" 
+                    class="nav-item has-treeview"
+                    th:classappend="${group.open} ? 'menu-open'">
+
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-folder"></i>
+                        <p>
+                            <span th:text="${group.name}"></span>
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item" th:each="menu : ${group.menus}">
+                            <a th:href="@{${menu.url}}" 
+                               class="nav-link"
+                               th:classappend="${menu.active} ? 'active'">
+
+                                <i class="fa fa-angle-right nav-icon"></i>
+                                <p th:text="${menu.name}"></p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</aside>

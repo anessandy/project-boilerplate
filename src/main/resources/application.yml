@@ -1,0 +1,103 @@
+spring:
+  mail:
+    host: meprofarm.ho
+    port: 587
+    username: noreply@meprofarm.ho
+    password: ${MAIL_PASSWORD} # gunakan environment variable
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.ssl.trust: meprofarm.ho
+  
+  datasource:
+    url: "jdbc:oracle:thin:@192.168.50.6:1521:otmpf"
+    username: kalkual_mepro
+    password: kalkual_meprofarm1
+    hikari:
+     maximum-pool-size: 10
+     minimum-idle: 2 
+     idle-timeout: 30000
+     max-lifetime: 1800000
+     connection-timeout: 30000
+     pool-name: applicationPool
+
+  jpa:
+    show-sql: true                 # jangan tampilkan SQL di production (set: false)
+    hibernate:
+      ddl-auto: none                # jangan auto update schema di production
+    database-platform: org.hibernate.dialect.OracleDialect
+    properties:
+      hibernate:
+        format_sql: false
+        jdbc:
+          batch_size: 30            # optimasi insert/update batch
+        order_inserts: true
+        order_updates: true
+
+  thymeleaf:
+    cache: false                     # aktifkan cache di production(set: true)
+    prefix: classpath:/templates/
+    mode: HTML
+  
+  web:
+    resources:
+      cache:
+        period: PT60M               # cache static resources selama 1 jam
+      add-mappings: true
+      
+# Logging Prod Env      
+#logging:
+#  level:
+#    root: INFO
+#    org.springframework.web: WARN
+#    org.hibernate.SQL: WARN
+#    com.zaxxer.hikari: WARN         # jangan terlalu detail di production
+#  file:
+#    name: logs/kalkual-system-dev.log          # arahkan ke file log      
+
+# Logging Dev Env
+logging:
+  level:
+    com.zaxxer.hikari.HikariConfig: DEBUG
+    com.zaxxer.hikari: TRACE
+    root: INFO
+    org.springframework.web: WARN
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql: TRACE
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  file:
+    name: logs/kalkual-system-dev.log
+
+server:
+  port: 8080
+  tomcat:
+    threads:
+      min-spare: 20
+      max: 300                      # naikkan thread pool
+    accept-count: 200
+    max-connections: 20000          # untuk banyak koneksi
+  connection-timeout: 10s
+  servlet:
+    context-path: /app-dev
+    session:
+      timeout: 30m
+  compression:                      # aktifkan compression
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+   
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,threaddump,heapdump,env,logfile
+  endpoint:
+    health:
+      show-details: when_authorized # lebih aman
+  health:
+    mail:
+      enabled: true
+    db:
+      enabled: true
+      
+file:
+  upload-dir: /var/app/uploads      # pakai absolute path di production

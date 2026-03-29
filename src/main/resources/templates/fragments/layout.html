@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+   <head th:replace="fragments/head :: head-resources">
+        <meta charset="UTF-8">
+        <title th:text="${title}">Dashboard</title>
+    </head>
+    <body class="hold-transition sidebar-mini layout-fixed text-sm">
+        <div class="wrapper" th:fragment="layout (title, pageTitle)">
+
+            <div th:replace="fragments/header :: header"></div>
+            <div th:replace="fragments/sidebar :: sidebar"></div>
+
+            <div class="content-wrapper pt-3 text-sm">
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <h1 th:text="${pageTitle}">Page Title</h1>
+                    </div>
+                </section>
+
+                <section class="content text-sm">
+                    <div class="container-fluid">
+                        <div th:replace="::content">Default content if not replaced</div>
+                    </div>
+                </section>
+            </div>
+
+            <!--<div th:replace="fragments/footer :: footer"></div>-->
+
+        </div>
+        
+        <script th:src="@{/adminlte/plugins/jquery/jquery.min.js}"></script>
+        <script th:src="@{/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        
+        <script th:src="@{/adminlte/plugins/select2/js/select2.full.min.js}"></script>
+        <script th:src="@{/adminlte/js/adminlte.min.js}"></script>
+        <script th:inline="javascript">
+            $(function () {
+                $(window).on('resize', function () {
+                    if ($(window).width() < 768) {
+                        $('body').addClass('sidebar-collapse');
+                    }
+                }).trigger('resize'); // langsung cek saat pertama load
+            });
+        </script>
+    </body>
+</html>

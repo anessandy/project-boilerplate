@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <!-- ===================== -->
+    <!-- HEAD (CSS) -->
+    <!-- ===================== -->
+    <head th:fragment="head-resources">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" th:href="@{/adminlte/plugins/fontawesome-free/css/all.min.css}">
+
+        <!-- Select2 -->
+        <link rel="stylesheet" th:href="@{/adminlte/plugins/select2/css/select2.min.css}">
+        <link rel="stylesheet" th:href="@{/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css}">
+
+        <!-- Date Range Picker -->
+        <link rel="stylesheet" th:href="@{/adminlte/plugins/daterangepicker/daterangepicker.css}">
+
+        <!-- DataTables -->
+        <link rel="stylesheet" th:href="@{/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}">
+
+        <!-- AdminLTE -->
+        <link rel="stylesheet" th:href="@{/adminlte/css/adminlte.min.css}">
+    </head>
+
+    <!-- ===================== -->
+    <!-- SCRIPT (JS) -->
+    <!-- ===================== -->
+    <th:block th:fragment="script-resources">
+
+        <!-- jQuery -->
+        <script th:src="@{/adminlte/plugins/jquery/jquery.min.js}"></script>
+
+        <!-- Bootstrap -->
+        <script th:src="@{/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+        <!-- AdminLTE -->
+        <script th:src="@{/adminlte/js/adminlte.min.js}"></script>
+        
+        <!-- Script dark/light toggle -->
+        <script th:inline="javascript">
+            $(function () {
+                if (localStorage.getItem("theme") === "dark") {
+                    $('body').addClass('dark-mode');
+                    $('#toggle-dark i').removeClass('fa-moon').addClass('fa-sun');
+                }
+
+                $('#toggle-dark').on('click', function (e) {
+                    e.preventDefault();
+                    $('body').toggleClass('dark-mode');
+                    if ($('body').hasClass('dark-mode')) {
+                        localStorage.setItem("theme", "dark");
+                        $('#toggle-dark i').removeClass('fa-moon').addClass('fa-sun');
+                    } else {
+                        localStorage.setItem("theme", "light");
+                        $('#toggle-dark i').removeClass('fa-sun').addClass('fa-moon');
+                    }
+                });
+            });
+        </script>
+
+    </th:block>
+
+</html>
