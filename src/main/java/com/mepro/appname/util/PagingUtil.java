@@ -17,9 +17,6 @@ public class PagingUtil {
     }
     
     public int getTotalPage(int totalData) {
-        if (totalData == 0) {
-            return 2;
-        }
-        return (int) Math.ceil((double) totalData / size);
+        return totalData == 0 ? 1 : (int) Math.ceil((double) totalData / size);
     }
 }
